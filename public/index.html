@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Sharing</title>
+  </head>
+  <body>
+    <span>Your File: </span><input id="fileInput" type="file" />
+    <span class="progress"></span>
+  </body>
+  <script>
+    const prog = document.querySelector(".progress");
+    const fileInput = document.getElementById("fileInput");
+    fileInput.addEventListener("change", (event) => {
+      let fileProgress = 0;
+      const file = fileInput.files[0];
+
+      const request = new XMLHttpRequest();
+      console.log(file.size);
+
+      request.upload.addEventListener("progress", (e) => {
+        if (e.loaded === file.size) {
+          prog.innerHTML = "Progress: completed";
+        } else {
+          fileProgress = Math.floor((e.loaded / file.size) * 100);
+          prog.innerHTML = "Progress: " + fileProgress + "%";
+        }
+      });
+
+      request.open("post", "/file");
+      request.setRequestHeader("Content-Type", file.type);
+      request.setRequestHeader(
+        "Content-Disposition",
+        `attachment; filename="${file.name}"`
+      );
+      request.send(file);
+    });
+  </script>
+</html>

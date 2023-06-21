@@ -1,0 +1,13 @@
+{
+  "name": "filesharing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "src/index.js"
+  },
+  "keywords": [],
+  "author": "Sajid Banday",
+  "license": "ISC"
+}
